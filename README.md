@@ -10,10 +10,10 @@
 Click the extension icon and input a list of paper names(or some other identifying information that will identify specifically the paper you want) seprated with commas
 
 ### when you press the search button it will do the following:
-1. find these papers with google scholar in a new window
-2. open the first result in a new window and close the search window
+1. find these papers with google scholar in a new tab
+2. open the first result in a new tab and close the search tab
 3. identify a pdf download
     <ol type="a">
-    <li>If identified the pdf will be downloaded and the window will be closed</li>
-    <li>If no dowload is identified then the window will stay open so a human can find the download option</li>
+    <li>If identified the pdf will be downloaded and the tab will be closed</li>
+    <li>If no dowload is identified then the tab will stay open so a human can find the download option</li>
     </ol>
