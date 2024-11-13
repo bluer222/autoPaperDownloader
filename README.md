@@ -2,12 +2,14 @@
 
 ## installation: 
 1. enable chrome developer mode 
-2. download the repository
-3. extract
-4. load the folder as an extension with the load unpakced button at chrome://extensions/
+2. download the repository through releases or git
+3. extract the zip if necessary
+4. load the folder as an extension with the "load unpacked" button at chrome://extensions/
 
 ## Use:
-Click the extension icon and input a list of paper names(or some other identifying information that will identify specifically the paper you want) seprated with commas
+1. Click the extension icon
+2. input a list of paper names(or some other identifying information that will identify specifically the paper you want) seprated with commas
+3. press search!
 
 ### when you press the search button it will do the following:
 1. find these papers with google scholar in a new tab
