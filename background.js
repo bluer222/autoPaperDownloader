@@ -13,8 +13,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         }
         console.log(urlsToDownload);
         if (interactTabId.length === 0) {
-                download(urlsToDownload, 0);
-        
+            download(urlsToDownload, 0);
+            urlsToDownload = [];
         }
 
     }
@@ -55,8 +55,8 @@ async function download(urls, index) {
     chrome.downloads.download({
         url: urls[index]
     }).then(() => {
-        if(index+1 !== urls.length){
-        download(urls, index+1);
+        if (index + 1 !== urls.length) {
+            download(urls, index + 1);
         }
     });
 }
