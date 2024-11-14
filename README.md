@@ -3,7 +3,7 @@
 ## installation: 
 1. download the repository through releases page or git
 2. extract the zip if necessary
-3. in chrome://extensions enable developer mode at the top right
+3. open chrome://extensions and enable developer mode at the top right
 4. load the folder using the "load unpacked" button at the top left
 
 ## Use:
