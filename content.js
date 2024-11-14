@@ -9,7 +9,7 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
 
         if (isTargetTab) {
             // Wait for the page to load completely before clicking
-            window.addEventListener('load', () => {
+            //window.addEventListener('load', () => {
                 //search for elements
                 const elements = document.querySelectorAll('*'); //get all elements
                 var bestElement = "";//classlist of product
@@ -43,7 +43,7 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
                     chrome.runtime.sendMessage({ action: 'download', url: url });
                     window.close();
                 }
-            });
+            //});
         }
 
     }
