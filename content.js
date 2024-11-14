@@ -33,6 +33,7 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
                 }
                 if (bestElement == "") {
                     alert("download identification failed");
+                    chrome.runtime.sendMessage({ action: 'done'});
                 } else {
                     let url = bestElement.innerHTML.match(/href="([^"]+)"/)[1];
                     //if its not a full url(just a path)
