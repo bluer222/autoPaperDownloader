@@ -1,10 +1,10 @@
 # Automatic paper downloader chrome extension
 
 ## installation: 
-1. enable chrome developer mode 
-2. download the repository through releases or git
-3. extract the zip if necessary
-4. load the folder as an extension with the "load unpacked" button at chrome://extensions/
+1. download the repository through releases page or git
+2. extract the zip if necessary
+3. in chrome://extensions enable developer mode at the top right
+4. load the folder using the "load unpacked" button at the top left
 
 ## Use:
 1. Click the extension icon
