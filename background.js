@@ -6,13 +6,17 @@ let urlsToDownload = [];
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log(request.action);
-    if (request.action === "download" || request.action === "done") {
-        interactTabId.splice(interactTabId.indexOf(sender.tab.id), 1);
-        if (request.action === "download") {
+    if (request.action === "earlyDownload" || request.action === "download" || request.action === "done") {
+        if(request.action === "earlyDownload"){
+            searchTabId.splice(searchTabId.indexOf(sender.tab.id), 1);
+        }else{
+            interactTabId.splice(interactTabId.indexOf(sender.tab.id), 1);
+        }
+        if (request.action === "download" || request.action === "earlyDownload") {
             urlsToDownload.push(request.url)
         }
         console.log(urlsToDownload);
-        if (interactTabId.length === 0) {
+        if (interactTabId.length === 0 && searchTabId.length === 0) {
             download(urlsToDownload, 0);
             urlsToDownload = [];
         }
