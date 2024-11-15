@@ -13,8 +13,12 @@
 
 ### When you press the search button it will do the following:
 1. find these papers with google scholar in a new tab
-2. open the first result in a new tab and close the search tab
-3. identify a pdf download
+2. find the first result on google scholar
+    <ol type="a">
+    <li>If the first result is a pdf then just download that and close the search tab</li>
+    <li>If the first result is a website then open it in a new tab and close the search tab</li>
+    </ol>
+4. identify a pdf download
     <ol type="a">
     <li>If identified the pdf will be downloaded and the tab will be closed</li>
     <li>If no dowload is identified then the tab will stay open so a human can find the download option</li>
