@@ -1,8 +1,11 @@
 chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
 
     if (isTargetTab == 1) {
-
-        chrome.runtime.sendMessage({ action: 'openInteractUrl', tabUrl: document.getElementsByClassName("gs_rt")[0].firstChild.href });
+        let firstResult = document.getElementsByClassName("gs_rt")[0].firstChild.href;
+        if(firstResult === undefined){
+            firstResult = document.getElementById("MEZ5JeX9UasJ").href;
+        }
+        chrome.runtime.sendMessage({ action: 'openInteractUrl', tabUrl: firstResult});
         window.close();
 
     } else if (isTargetTab == 2) {
@@ -32,7 +35,7 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
                     }
                 }
                 if (bestElement == "") {
-                    alert("download identification failed");
+                    alert("failed to find download button identification failed");
                     chrome.runtime.sendMessage({ action: 'done'});
                 } else {
                     let url = bestElement.innerHTML.match(/href="([^"]+)"/)[1];
