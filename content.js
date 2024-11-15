@@ -69,9 +69,7 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
                     } else {
                         console.log("It wasnt a pdf: " + url);
                         alert("failed to find download button");
-                        chrome.runtime.sendMessage({ action: 'done' }).then(()=>{
-                            window.close();
-                        });
+                        chrome.runtime.sendMessage({ action: 'done' });
                     }
                 });
             }
