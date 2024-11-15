@@ -10,13 +10,15 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
         isUrlPdf(firstResult).then((isPdf) => {
             if (isPdf) {
                 console.log("its a pdf, downloading: " + firstResult);
-                chrome.runtime.sendMessage({ action: 'earlyDownload', url: firstResult });
+                chrome.runtime.sendMessage({ action: 'earlyDownload', url: firstResult }).then(()=>{
+                    window.close();
+                });
             } else {
                 console.log("its not a pdf continue by opening: " + firstResult);
-                chrome.runtime.sendMessage({ action: 'openInteractUrl', url: firstResult });
+                chrome.runtime.sendMessage({ action: 'openInteractUrl', url: firstResult }).then(()=>{
+                    window.close();
+                });
             }
-            console.log("closing");
-            //window.close();
         });
     } else if (isTargetTab == 2) {
 
@@ -61,12 +63,15 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
                 isUrlPdf(url).then((isPdf) => {
                     if (isPdf) {
                         console.log("It was a pdf");
-                        chrome.runtime.sendMessage({ action: 'download', url: url });
-                        window.close();
+                        chrome.runtime.sendMessage({ action: 'download', url: url }).then(()=>{
+                            window.close();
+                        });
                     } else {
                         console.log("It wasnt a pdf: " + url);
                         alert("failed to find download button");
-                        chrome.runtime.sendMessage({ action: 'done' });
+                        chrome.runtime.sendMessage({ action: 'done' }).then(()=>{
+                            window.close();
+                        });
                     }
                 });
             }
