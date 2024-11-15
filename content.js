@@ -5,21 +5,19 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
         if (firstResult === undefined) {
             //if it is a direct-pdf result then download
             firstResult = document.getElementsByClassName("gs_or_ggsm")[0].firstChild.href;
-            //make sure its a pdf
-            isUrlPdf(firstResult).then((isPdf) => {
-                if (isPdf) {
-                    chrome.runtime.sendMessage({ action: 'earlyDownload', url: firstResult });
-                } else {
-                    chrome.runtime.sendMessage({ action: 'openInteractUrl', url: firstResult });
-                }
-                window.close();
-            });
-        } else {
-            //if it is a normal result then continue normally
-            chrome.runtime.sendMessage({ action: 'openInteractUrl', tabUrl: firstResult });
-            window.close();
         }
-
+        //make sure its a pdf
+        isUrlPdf(firstResult).then((isPdf) => {
+            if (isPdf) {
+                console.log("its a pdf, downloading: " + firstResult);
+                chrome.runtime.sendMessage({ action: 'earlyDownload', url: firstResult });
+            } else {
+                console.log("its not a pdf continue by opening: " + firstResult);
+                chrome.runtime.sendMessage({ action: 'openInteractUrl', url: firstResult });
+            }
+            console.log("closing");
+            //window.close();
+        });
     } else if (isTargetTab == 2) {
 
         if (isTargetTab) {
@@ -41,11 +39,11 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
                         length = element.innerHTML.length;
                         bestElement = element;
                     }
-                    console.log(element);
                 }
             }
             if (bestElement == "") {
                 alert("failed to find download button");
+                console.log("No link found");
                 chrome.runtime.sendMessage({ action: 'done' });
             } else {
 
@@ -54,12 +52,19 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
                 if (url.charAt(0) == "/") {
                     url = window.location.origin + url;
                 }
+                //remove the stuff after the ? for sites like https://dl.acm.org/doi/abs/10.1145/3658226
+                const index = url.indexOf('?');
+                if (index !== -1) {
+                    url = url.substring(0, index);
+                }          
                 //check if its a pdf
                 isUrlPdf(url).then((isPdf) => {
                     if (isPdf) {
+                        console.log("It was a pdf");
                         chrome.runtime.sendMessage({ action: 'download', url: url });
                         window.close();
                     } else {
+                        console.log("It wasnt a pdf: " + url);
                         alert("failed to find download button");
                         chrome.runtime.sendMessage({ action: 'done' });
                     }
@@ -70,16 +75,21 @@ chrome.runtime.sendMessage({ action: 'isTab' }, (isTargetTab) => {
     }
 });
 async function isUrlPdf(url) {
-    // Check for explicit .pdf extension or "pdf" in the URL
-    if (url.endsWith(".pdf") || url.includes("/pdf/")) {
+    // Check for explicit .pdf extension
+    //do not use pdf in the url to avioid false positives
+    if (url.endsWith(".pdf") /*|| url.includes("/pdf/")*/) {
         return true;
     }
 
     // Check MIME type using a HEAD request
-    const response = await fetch(url, { method: 'HEAD' });
-    if (response.ok) {
-        const contentType = response.headers.get('Content-Type');
-        return contentType == 'application/pdf';
+    try {
+        const response = await fetch(url, { method: 'HEAD' });
+        if (response.ok) {
+            const contentType = response.headers.get('Content-Type');
+            return contentType.includes('application/pdf');
+        }
+    } catch {
+        console.log("failed to fetch, likely not a pdf");
     }
 
     return false;

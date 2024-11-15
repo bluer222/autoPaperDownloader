@@ -38,8 +38,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         searchTabId.splice(searchTabId.indexOf(sender.tab.id), 1);
 
         console.log("opening interact url");
+        console.log()
         chrome.tabs.create({
-            url: request.tabUrl,
+            url: request.url,
         }, (tab) => {
             interactTabId.push(tab.id);
         });
